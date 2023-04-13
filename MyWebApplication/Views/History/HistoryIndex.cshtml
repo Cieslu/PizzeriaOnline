@@ -1,0 +1,51 @@
+﻿@model ICollection<UserData>
+
+<div class="mb-5 text-center row">
+    <div class="col-1">
+        <a class="btn btn-small btn-dark" asp-controller="Home" asp-action="HomeIndex">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+            </svg>
+        </a>
+    </div>
+    <div class="col-10">
+        <h2>Historia zamówień</h2>
+    </div>
+</div>
+
+@if (Model.Count() == 0)
+{
+    <div class="text-center fs-5">
+        <p>Nie posiadasz jeszcze żadnych zamówień!</p>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Identyfikator zamówienia</th>
+                    <th scope="col">Data zamóweinia</th>
+                    <th scope="col">Szczegóły zamówienia</th>
+                    <th scope="col">Status zamówienia</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var element in Model)
+                {
+                    <tr>
+                        <th class="text-uppercase" scope="row">@element.Id</th>
+                        <td>@element.DateOrder.ToString("dddd, dd MMMM yyyy HH:mm")</td>
+                        <td><a class="" asp-controller="History" asp-action="HistoryDetails" asp-route-id="@element.Id">Pokaż</a></td>
+                        @for (var i = 0; i < element.StatusName.Count(); i++)
+                        {
+                            <td>@element.StatusName[i]</td>
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

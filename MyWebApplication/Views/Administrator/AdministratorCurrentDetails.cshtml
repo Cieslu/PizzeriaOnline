@@ -1,0 +1,101 @@
+﻿@model ICollection<Order>
+
+<div class="mb-5 text-center row">
+    <div class="col-1">
+        <a class="btn btn-small btn-dark" asp-controller="Administrator" asp-action="StatusEdit" asp-route-id="@ViewBag.OrderId">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+            </svg>
+        </a>
+    </div>
+    <div class="col-10">
+        <h2>Szczegóły zamówienia</h2>
+        <div class="fw-bold">Identyfikator zamówienia: <span class="text-uppercase fw-bold">@ViewBag.OrderId</span></div>
+    </div>
+</div>
+
+<div class="my-mb table-responsive">
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th scope="col">Data zamówienia</th>
+                <th scope="col">Imię</th>
+                <th scope="col">Nazwisko</th>
+                <th scope="col">Miasto</th>
+                <th scope="col">Ulica</th>
+                <th scope="col">Numer domu</th>
+                <th scope="col">Numer telefonu</th>
+                <th scope="col">Ilość zamówień</th>
+                <th scope="col">Suma zamówienia</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var element in ViewBag.DetailsOrder)
+            {
+                <tr>
+                    <td>@element.DateOrder.ToString("dddd, dd MMMM yyyy HH:mm")</td>
+                    <td>@element.Name</td>
+                    <td>@element.Surname</td>
+                    <td>@element.City</td>
+                    <td>@element.Street</td>
+                    <td>@element.HouseNumber</td>
+                    <td>@element.PhoneNumber</td>
+                    <td>@ViewBag.Quantity</td>
+                    <td>@string.Format("{0:N2}zł", ViewBag.Sum)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped text-center">
+        <thead>
+            <tr>
+                <th scope="col">Nazwa pizzy</th>
+                <th scope="col">Rozmiar</th>
+                <th scope="col">Ciasto</th>
+                <th scope="col">Sos</th>
+                <th scope="col">Ser</th>
+                <th scope="col">Mięso</th>
+                <th scope="col">Warzywa</th>
+                <th scope="col">Cena</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var element in Model)
+            {
+                <tr>
+                    <td>@element.PizzaName</td>
+                    <td>@element.Size</td>
+                    <td>@element.Dough</td>
+                    <td>@element.Sauce</td>
+                    <td>@element.Cheese</td>
+
+                    @if (element.Meat == null)
+                    {
+                        <td>brak</td>
+                    }
+                    else
+                    {
+                        <td>@element.Meat</td>
+                    }
+
+                    @if (element.Vegetable == null)
+                    {
+                        <td>brak</td>
+                    }
+                    else
+                    {
+                        <td>@element.Vegetable</td>
+                    }
+
+                    <td>@string.Format("{0:N2}zł", element.Price)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["title"] = "Strona główna";
+}
+
+@model ICollection<Opinion>
+
+@if (this.User.IsInRole("Administrator"))
+{
+    <section>
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-6 text-center fs-3">
+                <ul class="list-group">
+                    <li class="list-group-item bg-light btn-admin border"><a class="text-decoration-none text-dark" asp-controller="Administrator" asp-action="AdministratorCurrentIndex">Zamówienia aktulane</a></li>
+                    <li class="list-group-item bg-light btn-admin border"><a class="text-decoration-none text-dark" asp-controller="Administrator" asp-action="AdministratorArchivalIndex">Zamówienia archiwalne</a></li>
+                    <li class="list-group-item bg-light btn-admin border"><a class="text-decoration-none text-dark" asp-controller="Administrator" asp-action="AdministratorPizzaIndex">Zarządzanie gotowymi pizzami</a></li>
+                    <li class="list-group-item bg-light btn-admin border"><a class="text-decoration-none text-dark" asp-controller="Administrator" asp-action="AdministratorOpinions">Opinie klientów</a></li>
+                    <li class="list-group-item bg-light btn-admin border"><a class="text-decoration-none text-dark" asp-controller="Administrator" asp-action="AdministratorChartIndex">Wykresy sprzedażowe</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+}
+else
+{
+    <section>
+        <div>
+            <header class="text-center">
+                <h2 class="mt-5 mb-5">Oto propozycje naszych przepysznych pizz, może się skusisz?</h2>
+            </header>
+            @if (ViewBag.PizzaCount != 0)
+            {
+                <div class="d-flex justify-content-center">
+                    <div id="carouselExampleFade" class="carousel slide carousel-fade col-md-8" data-bs-ride="carousel">
+                        <div class="carousel-inner border-radius">
+                            @foreach (var element in ViewBag.Pizza)
+                            {
+                                if (ViewBag.Index == 0)
+                                {
+                                    <div class="carousel-item active">
+                                        <a asp-controller="Pizza" asp-action="PizzaDetails" asp-route-id="@element.Id">
+                                            <img src="~/pizza_images/@element.Name/@element.ImagePath" class="d-block w-100" alt="Pizza">
+                                            <div class="carousel-caption d-none d-md-block bg-light opacity-75 border-radius">
+                                                <h3 class="text-dark m-0">@element.Name</h3>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    ViewBag.Index++;
+                                }
+                                else
+                                {
+                                    <div class="carousel-item">
+                                        <a asp-controller="Pizza" asp-action="PizzaDetails" asp-route-id="@element.Id">
+                                            <img src="~/pizza_images/@element.Name/@element.ImagePath" class="d-block w-100" alt="Pizza">
+                                            <div class="carousel-caption d-none d-md-block bg-light opacity-75 border-radius">
+                                                <h3 class="text-dark m-0">@element.Name</h3>
+                                            </div>
+                                        </a>
+                                    </div>
+
+                                    ViewBag.Index++;
+                                }
+                            }
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="text-center fs-5">
+                    <p>Administrator nie dodał jeszcze żadnych pozycji!</p>
+                </div>
+            }
+        </div>
+    </section>
+
+    <hr class="my-5">
+
+    <section>
+        <header class="text-center">
+            <h2 class="mt-5 mb-5">Podziel się z nami swoją opinią.</h2>
+        </header>
+        <div class="d-flex justify-content-center">
+            <div class="row col-12 col-md-9 bg-light p-5 border border-1">
+                <div class="row border-bottom pb-3">
+                    <div class="col-6">
+                        <div class="h4">Opinie (@Model.Count):</div>
+                    </div>
+                    <div class="col-6 p-0 d-flex justify-content-end">
+                        <a class="btn btn-small btn-dark" asp-controller="Home" asp-action="HomeOpinion">Dodaj opinię</a>
+                    </div>
+                </div>
+
+                @if (Model.Count == 0)
+                {
+                    <div class="bg-light mt-5 text-center">
+                        <h5>Nie dodano jeszcze żadnych opinii!</h5>
+                    </div>
+                }
+
+                <div class="mt-3 overflow-auto" style="max-height: 500px;">
+                    <ul class="list-unstyled">
+                        @foreach (var element in Model)
+                        {
+                            <li class="p-3 border-bottom row">
+                                <div class="row">
+                                    <div class="col-10 fw-bold">@element.Name:</div>
+                                    <div class="col-2 text-end">@element.Date.ToShortDateString()</div>
+                                </div>
+                                <div class="col-10 ms-3"><p>@element.Description</p></div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+}

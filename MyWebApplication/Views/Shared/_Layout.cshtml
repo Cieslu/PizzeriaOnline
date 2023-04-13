@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pizza z wąsem</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js" integrity="sha512-sW/w8s4RWTdFFSduOTGtk4isV1+190E/GghVffMA9XczdJ2MDzSzLEubKAs5h0wzgSJOQTRYyaz73L3d6RtJSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MyWebApplication.styles.css" asp-append-version="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/fontello/css/fontello.css">
+
+
+</head>
+<body>
+    <header class="header-mb">
+        <nav class="navbar navbar-expand-xl navbar-light bg-light fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand m-0 fs-4" asp-controller="Home" asp-action="HomeIndex"><img class="logo-brand-fs logo" src="~/logo.png" alt="Logo"><span class="logo-fs"> Pizza z wąsem</span></a>
+
+                @if (!this.User.IsInRole("Administrator"))
+                {
+                    <div class="text-center d-xl-none" style="width: 125px">
+                        <a class="text-dark link-hover text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="icon-shopping-basket fs-2"></i></a>
+                        <span class="text-dark fs-2 user-select-none quantity" style="width: 82px;">@ViewBag.orderCount</span>
+                    </div>
+                }
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbarNav" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbar">
+                    <ul class="navbar-nav mt-3 mt-xl-0">
+                        @if (!this.User.IsInRole("Administrator"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link link-hover text-dark me-2 font-size" asp-controller="Home" asp-action="HomeIndex">Strona główna</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-hover text-dark me-2 font-size" asp-controller="Pizza" asp-action="PizzaIndex">Pizza</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-hover text-dark me-2 font-size" asp-controller="OwnPizza" asp-action="OwnPizzaIndex">Stwórz własną pizzę</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link-hover text-dark me-2 font-size" asp-controller="Contact" asp-action="ContactIndex">Kontakt</a>
+                            </li>
+
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link link-hover text-dark me-4 font-size" asp-controller="History" asp-action="HistoryIndex">Historia zamówień</a>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    @if (!this.User.IsInRole("Administrator"))
+                    {
+                        <div class="d-none d-xl-block" style="width: 125px">
+                            <a class="text-dark link-hover text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="icon-shopping-basket fs-2"></i></a>
+                            <span class="text-dark fs-2 user-select-none quantity" style="width: 82px;">@ViewBag.orderCount</span>
+                        </div>
+                    }
+                    <div class="d-xl-none">
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+                <div class="d-none d-xl-block">
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <partial name="_Basket" />
+
+    <div class="container">
+        <main role="main" class="pb-5">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="footer bg-light p-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-xl-4 row">
+                    <div class="col-12 col-sm-6">
+                        <h5 class="fw-bold p-0"> Menu</h5>
+                        <a class="d-block text-decoration-none text-dark link-hover" asp-controller="Pizza" asp-action="PizzaIndex">Pizza</a>
+                        <a class="d-block text-decoration-none text-dark link-hover" style="margin-top: -20px;" asp-controller="OwnPizza" asp-action="OwnPizzaIndex">Stwórz własną pizzę</a>
+                    </div>
+                    <div class="col-12 mt-3 mt-sm-0 col-sm-6">
+                        <h5 class="fw-bold p-0">Kontakt</h5>
+                        <a class="d-block text-decoration-none text-dark link-hover" asp-controller="Contact" asp-action="ContactIndex">Gdzie jesteśmy?</a>
+                        <a class="d-block text-decoration-none text-dark link-hover" style="margin-top: -20px;" asp-controller="Contact" asp-action="ContactIndex">Telefon</a>
+                    </div>
+                </div>
+                <div class="col-12 col-xl-4 order-1 order-xl-0 mt-3 text-xl-center text-wrap">
+                    <p class="text-dark">&copy; 2022 Pizza z wąsem. Wszelkie prawa zastrzeżone.</p>
+                </div>
+                <div class="col-12 col-xl-4 mt-3 row fs-1">
+                    <div class="col-12 d-flex justify-content-start justify-content-xl-end">
+                        <a class="text-decoration-none text-dark link-hover" href="https://www.facebook.com/" target="_blank"><i class="icon-facebook-squared"></i></a>
+                        <a class="text-decoration-none text-dark link-hover mx-5" href="https://www.youtube.com/" target="_blank"><i class="icon-youtube-play"></i></a>
+                        <a class="text-decoration-none text-dark link-hover" href="https://www.instagram.com/" target="_blank"><i class="icon-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

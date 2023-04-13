@@ -1,0 +1,44 @@
+﻿@model Pizza
+
+<header class="text-center mb-4 col-12">
+    <h2>Edytuj pizzę</h2>
+</header>
+
+<div class="mt-4 bg-light p-5 border border-1">
+    <form method="post" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+        <div class="mb-3 form-floating">
+            <input class="form-control" asp-for="Name">
+            <label asp-for="Name"></label>
+            <span class="text-danger">@ViewData["ErrorName"]</span>
+        </div>
+        <div class="mb-3 mt-4 form-floating">
+            <select class="form-select" asp-for="SizeId" asp-items="@ViewBag.Size"></select>
+            <label asp-for="SizeId"></label>
+        </div>
+        <div class="mb-3 form-floating">
+            <select class="form-select" asp-for="DoughId" asp-items="@ViewBag.Dough"></select>
+            <label asp-for="DoughId"></label>
+        </div>
+        <div class="mb-3 form-floating">
+            <select class="form-select" asp-for="SauceId" asp-items="@ViewBag.Sauce"></select>
+            <label asp-for="SauceId"></label>
+        </div>
+        <div class="mb-3 form-floating">
+            <select class="form-select" asp-for="CheeseId" asp-items="@ViewBag.Cheese"></select>
+            <label asp-for="CheeseId"></label>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="Image"></label>
+            <input class="form-control" asp-for="Image" type="file">
+            <small>Jeśli nie wybierzesz innego zdjęcia, pozostanie niezmienione</small>
+            <span asp-validation-for="Image" class="text-danger"></span>
+            <span class="text-danger d-block">@ViewData["Error"]</span>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-small btn-dark" type="submit">Dodaj składniki mięsne oraz warzywne</button>
+        </div>
+    </form>
+</div>
+
+

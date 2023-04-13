@@ -1,0 +1,340 @@
+﻿@{
+    ViewData["title"] = "Stwórz własną pizzę";
+}
+
+@model Pizza
+
+<section>
+    <div class="row justify-content-center">
+        <header class="text-center mb-4">
+            <h1>Stwórz pizzę, na jaką masz ochotę<i class="icon-emo-thumbsup"></i></h1>
+        </header>
+        <div class="text-center mb-5">
+            <img class="img-fluid" src="~/pizzaKreator.png" href="Pizza">
+        </div>
+        <div class="col-12">
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <div class="row justify-content-center" style="min-height: 460px;">
+                    <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionSize">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Rozmiar</button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionSize">
+                                <div class="accordion-body bg-light">
+                                    <input type="radio" class="btn-check sizeRadio" id="20-sizeradio1" value="1" asp-for="SizeRadio" autocomplete="off" checked>
+                                    <label class="btn btn-outline-secondary col-12" for="20-sizeradio1">mała</label>
+
+                                    <input type="radio" class="btn-check sizeRadio" id="25-sizeradio2" value="2" asp-for="SizeRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2" for="25-sizeradio2">średnia</label>
+
+                                    <input type="radio" class="btn-check sizeRadio" id="30-sizeradio3" value="3" asp-for="SizeRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2" for="30-sizeradio3">duża</label>
+
+                                    <input type="radio" class="btn-check sizeRadio" id="35-sizeradio4" value="4" asp-for="SizeRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2 mb-2" for="35-sizeradio4">mega</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-5 col-md-4 col-xl-2 p-0" id="accordionDough">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">Ciasto</button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionDough">
+                                <div class="accordion-body bg-light">
+                                    <input type="radio" class="btn-check doughRadio" id="3-doughradio1" value="1" asp-for="DoughRadio" autocomplete="off" checked>
+                                    <label class="btn btn-outline-secondary col-12" for="3-doughradio1">cienkie</label>
+
+                                    <input type="radio" class="btn-check doughRadio" id="6-doughradio2" value="2" asp-for="DoughRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2" for="6-doughradio2">grube</label>
+
+                                    <input type="radio" class="btn-check doughRadio" id="9-doughradio3" value="3" asp-for="DoughRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2" for="9-doughradio3">ser w brzegach</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionSauce">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Sos do pizzy</button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionSauce">
+                                <div class="accordion-body bg-light">
+                                    <input type="radio" class="btn-check sauceRadio" id="2-sauceradio1" value="1" asp-for="SauceRadio" autocomplete="off" checked>
+                                    <label class="btn btn-outline-secondary col-12" for="2-sauceradio1">sos pomidorowy</label>
+
+                                    <input type="radio" class="btn-check sauceRadio" id="2-sauceradio2" value="2" asp-for="SauceRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2" for="2-sauceradio2">sos kremowy</label>
+
+                                    <input type="radio" class="btn-check sauceRadio" id="2-sauceradio3" value="3" asp-for="SauceRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2" for="2-sauceradio3">sos pikantny pomidorowy</label>
+
+                                    <input type="radio" class="btn-check sauceRadio" id="2-sauceradio4" value="4" asp-for="SauceRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2" for="2-sauceradio4">sos czosnkowy</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionCheese">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFour">
+                                <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseheadingFour" aria-expanded="false" aria-controls="collapseheadingFour">Ser</button>
+                            </h2>
+                            <div id="collapseheadingFour" class="accordion-collapse collapse show" aria-labelledby="headingheadingFour" data-bs-parent="#accordionCheese">
+                                <div class="accordion-body bg-light">
+                                    <input type="radio" class="btn-check cheeseRadio" id="0-cheeseradio1" value="1" asp-for="CheeseRadio" autocomplete="off" checked>
+                                    <label class="btn btn-outline-secondary col-12" for="0-cheeseradio1">mozzarella</label>
+
+                                    <input type="radio" class="btn-check cheeseRadio" id="4-cheeseradio2" value="2" asp-for="CheeseRadio" autocomplete="off">
+                                    <label class="btn btn-outline-secondary col-12 mt-2" for="4-cheeseradio2">podwójna mozzarella</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionMeat">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingFive">
+                                <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Mięso</button>
+                            </h2>
+                            <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingFive" data-bs-parent="#accordionMeat">
+                                <div class="accordion-body bg-light">
+                                    <input type="checkbox" class="btn-check meatCheckbox" id="5.2-meatcheck1" value="1" asp-for="MeatCheckbox1" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12" for="5.2-meatcheck1">pepperoni</label>
+
+                                    <input type="checkbox" class="btn-check meatCheckbox" id="5.2-meatcheck2" value="2" asp-for="MeatCheckbox2" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5.2-meatcheck2">szynka</label>
+
+                                    <input type="checkbox" class="btn-check meatCheckbox" id="5.2-meatcheck3" value="3" asp-for="MeatCheckbox3" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5.2-meatcheck3">wołowina</label>
+
+                                    <input type="checkbox" class="btn-check meatCheckbox" id="5.2-meatcheck4" value="4" asp-for="MeatCheckbox4" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5.2-meatcheck4">wieprzowina</label>
+
+                                    <input type="checkbox" class="btn-check meatCheckbox" id="5.2-meatcheck5" value="5" asp-for="MeatCheckbox5" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5.2-meatcheck5">kurczak</label>
+
+                                    <input type="checkbox" class="btn-check meatCheckbox" id="5.2-meatcheck6" value="6" asp-for="MeatCheckbox6" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5.2-meatcheck6">boczek</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionVegetable">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingSix">
+                                <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Warzywa</button>
+                            </h2>
+                            <div id="collapseSix" class="accordion-collapse collapse show" aria-labelledby="headingSix" data-bs-parent="#accordionVegetable">
+                                <div class="accordion-body bg-light">
+                                    <input type="checkbox" class="btn-check vegetableCheckbox" id="5-vegetablecheck1" value="1" asp-for="VegetableCheckbox1" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12" for="5-vegetablecheck1">kukurydza</label>
+
+                                    <input type="checkbox" class="btn-check vegetableCheckbox" id="5-vegetablecheck2" value="2" asp-for="VegetableCheckbox2" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5-vegetablecheck2">oliwki</label>
+
+                                    <input type="checkbox" class="btn-check vegetableCheckbox" id="5-vegetablecheck3" value="3" asp-for="VegetableCheckbox3" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5-vegetablecheck3">papryczki jalapenos</label>
+
+                                    <input type="checkbox" class="btn-check vegetableCheckbox" id="5-vegetablecheck4" value="4" asp-for="VegetableCheckbox4" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5-vegetablecheck4">pieczarki</label>
+
+                                    <input type="checkbox" class="btn-check vegetableCheckbox" id="5-vegetablecheck5" value="5" asp-for="VegetableCheckbox5" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5-vegetablecheck5">papryka</label>
+
+                                    <input type="checkbox" class="btn-check vegetableCheckbox" id="5-vegetablecheck6" value="6" asp-for="VegetableCheckbox6" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5-vegetablecheck6">cebula</label>
+
+                                    <input type="checkbox" class="btn-check vegetableCheckbox" id="5-vegetablecheck7" value="7" asp-for="VegetableCheckbox7" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5-vegetablecheck7">pomidory</label>
+
+                                    <input type="checkbox" class="btn-check vegetableCheckbox" id="5-vegetablecheck8" value="8" asp-for="VegetableCheckbox8" autocomplete="off">
+                                    <label class="btn btn-outline-dark col-12 mt-2" for="5-vegetablecheck8">rukola</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 mt-4 d-flex justify-content-center">
+                    <div class="text-center shadow bg-light p-2 edit-price"></div>
+                </div>
+                <div class="d-flex justify-content-center mt-5">
+                    <button type="button" class="btn btn-small btn-dark" data-bs-toggle="modal" data-bs-target="#exampleModal">Dodaj do koszyka</button>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Może chcesz jakoś nazwać swoją pizzę?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body form-floating">
+                                <input class="form-control" asp-for="OwnPizzaName">
+                                <label style="padding-left: 28px; padding-top: 32px;" asp-for="OwnPizzaName"></label>
+                                <small>Jeśli nie podasz nazwy, pizza zostanie dodana z nazwą domyślną</small>
+                                <span asp-validation-for="OwnPizzaName" class="text-danger"></span>
+                                <div class="d-flex justify-content-center mt-4">
+                                    <button type="submit" class="btn btn-small btn-dark" data-bs-dismiss="modal">Dodaj</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    const sizeRadioChecked = document.querySelectorAll(".sizeRadio");
+    const doughRadioChecked = document.querySelectorAll(".doughRadio");
+    const sauceRadioChecked = document.querySelectorAll(".sauceRadio");
+    const cheeseRadioChecked = document.querySelectorAll(".cheeseRadio");
+    const meatCheckboxChecked = document.querySelectorAll(".meatCheckbox");
+    const vegetableCheckboxChecked = document.querySelectorAll(".vegetableCheckbox");
+    const editPrice = document.querySelector(".edit-price");
+
+    let price = 0;
+    let bool = false;
+
+    let sizePrice = 20;
+    let doughPrice = 3;
+    let saucePrice = 2;
+    let cheesePrice = 0;
+    let meatPrice = 0;
+    let vegetablePrice = 0;
+      
+    const size = function(){
+      
+        let sizeRadioId = String(this.id);
+        let sizeRadioSubstr = sizeRadioId.substr(0, sizeRadioId.indexOf("-"));
+        let sizeRadioValue = Number(sizeRadioSubstr);
+
+        if(this.checked === true){
+
+            sizePrice = sizeRadioValue;            
+        }   
+
+        price = sizePrice + doughPrice + saucePrice + cheesePrice + meatPrice + vegetablePrice;
+        editPrice.innerHTML = `<p class="fs-5 m-0 p-3">Wartość zamówienia: ${(Math.round(price*100)/100).toFixed(2)}zł</p>`;
+    }
+
+    const dough = function(){
+      
+        let doughRadioId = String(this.id);
+        let doughRadioSubstr = doughRadioId.substr(0, doughRadioId.indexOf("-"));
+        let doughRadioValue = Number(doughRadioSubstr);
+
+        if(this.checked === true){
+
+            doughPrice = doughRadioValue;            
+        }   
+
+        price = sizePrice + doughPrice + saucePrice + cheesePrice + meatPrice + vegetablePrice;
+        editPrice.innerHTML = `<p class="fs-5 m-0 p-3">Wartość zamówienia: ${(Math.round(price*100)/100).toFixed(2)}zł</p>`;
+    }
+
+    const sauce = function(){
+      
+        let sauceRadioId = String(this.id);
+        let sauceRadioSubstr = sauceRadioId.substr(0, sauceRadioId.indexOf("-"));
+        let sauceRadioValue = Number(sauceRadioSubstr);
+
+        if(this.checked === true){
+
+            saucePrice = sauceRadioValue;            
+        }   
+
+        price = sizePrice + doughPrice + saucePrice + cheesePrice + meatPrice + vegetablePrice;
+        editPrice.innerHTML = `<p class="fs-5 m-0 p-3">Wartość zamówienia: ${(Math.round(price*100)/100).toFixed(2)}zł</p>`;
+    }
+
+    const cheese = function(){
+      
+        let cheeseRadioId = String(this.id);
+        let cheeseRadioSubstr = cheeseRadioId.substr(0, cheeseRadioId.indexOf("-"));
+        let cheeseRadioValue = Number(cheeseRadioSubstr);
+
+        if(this.checked === true){
+
+            cheesePrice = cheeseRadioValue;            
+        }   
+
+        price = sizePrice + doughPrice + saucePrice + cheesePrice + meatPrice + vegetablePrice;
+        editPrice.innerHTML = `<p class="fs-5 m-0 p-3">Wartość zamówienia: ${(Math.round(price*100)/100).toFixed(2)}zł</p>`;
+    }
+
+    const meat = function(){
+      
+        let meatCheckboxId = String(this.id);
+        let meatCheckboxSubstr = meatCheckboxId.substr(0, meatCheckboxId.indexOf("-"));
+        let meatCheckboxValue = Number(meatCheckboxSubstr);
+
+        if(this.checked === true){
+
+            meatPrice += meatCheckboxValue;            
+        }   
+        else{
+
+            meatPrice -= meatCheckboxValue;            
+        }
+
+        price = sizePrice + doughPrice + saucePrice + cheesePrice + meatPrice + vegetablePrice;
+        editPrice.innerHTML = `<p class="fs-5 m-0 p-3">Wartość zamówienia: ${(Math.round(price*100)/100).toFixed(2)}zł</p>`;
+    }
+
+    const vegetable = function(){
+      
+        let vegetableCheckboxId = String(this.id);
+        let vegetableCheckboxSubstr = vegetableCheckboxId.substr(0, vegetableCheckboxId.indexOf("-"));
+        let vegetableCheckboxValue = Number(vegetableCheckboxSubstr);
+
+        if(this.checked === true){
+
+            vegetablePrice += vegetableCheckboxValue;            
+        }   
+        else{
+
+            vegetablePrice -= vegetableCheckboxValue;            
+        }
+
+        price = sizePrice + doughPrice + saucePrice + cheesePrice + meatPrice + vegetablePrice;
+        editPrice.innerHTML = `<p class="fs-5 m-0 p-3">Wartość zamówienia: ${(Math.round(price*100)/100).toFixed(2)}zł</p>`;
+    }
+    
+    sizeRadioChecked.forEach(x => {
+
+        x.addEventListener("click", size);
+    });
+
+    doughRadioChecked.forEach(x => {
+
+        x.addEventListener("click", dough);
+    });
+
+     sauceRadioChecked.forEach(x => {
+
+        x.addEventListener("click", sauce);
+    });
+
+     cheeseRadioChecked.forEach(x => {
+
+        x.addEventListener("click", cheese);
+    });
+
+     meatCheckboxChecked.forEach(x => {
+
+        x.addEventListener("click", meat);
+    });
+
+     vegetableCheckboxChecked.forEach(x => {
+
+        x.addEventListener("click", vegetable);
+    });
+
+    price = sizePrice + doughPrice + saucePrice + cheesePrice + meatPrice + vegetablePrice;
+    editPrice.innerHTML = `<p class="fs-5 m-0 p-3">Wartość zamówienia: ${(Math.round(price*100)/100).toFixed(2)}zł</p>`;
+</script>

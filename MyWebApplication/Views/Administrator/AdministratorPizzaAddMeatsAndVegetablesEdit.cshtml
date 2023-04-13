@@ -1,0 +1,22 @@
+﻿@model MeatVegetable
+
+<header class="text-center mb-4 col-12">
+    <h2>Edytuj pizzę</h2>
+</header>
+
+<div class="mt-4 bg-light p-5 border border-1">
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label class="form-label" asp-for="Meats"></label>
+            <select class="form-select" asp-for="Meats" asp-items="@ViewBag.Meat" size="@ViewBag.MeatsQuantity" multiple></select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" asp-for="Vegetables"></label>
+            <select class="form-select" asp-for="Vegetables" asp-items="@ViewBag.Vegetable" size="@ViewBag.VegetablesQuantity" multiple></select>
+        </div>
+        <div class="text-center">
+            <button class="btn btn-small btn-dark" type="submit">Zatwierdź</button>
+        </div>
+    </form>
+</div>

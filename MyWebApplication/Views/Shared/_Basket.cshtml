@@ -1,0 +1,114 @@
+﻿<aside>
+    <div class="offcanvas offcanvas-end bg-light" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header ">
+            <h3 class="offcanvas-title h2" id="offcanvasRightLabel">Twoje zamówienie</h3>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body m-0 px-3 text-break text-start text-dark">
+            <div>
+                @if (ViewBag.orderCount == 0 || ViewBag.order == null || ViewBag.tempWholeOrderPrice == null)
+                {
+                    <p class="text-center">Koszyk jest pusty</p>
+                }
+                else
+                {
+                    <div class="mb-5 empty">
+                        <h5 class="sumOrder">Wartość zamówienia: @string.Format("{0:N2}zł", ViewBag.tempWholeOrderPrice)</h5>
+                    </div>
+                    @foreach (var element in ViewBag.order)
+                    {
+                        <ul class="list-unstyled fs-basket order" id="@element.Id">
+                            <li><h5>Pizza: @element.TempPizzaName</h5></li>
+                            <li><span class="fw-bold">Rozmiar:</span> @element.TempSize</li>
+                            <li><span class="fw-bold">Ciasto:</span> @element.TempDough</li>
+                            <li><span class="fw-bold">Sos do pizzy:</span> @element.TempSauce</li>
+                            <li><span class="fw-bold">Ser:</span> @element.TempCheese</li>
+                            @if (element.TempMeat != null)
+                            {
+                                <li><span class="fw-bold">Mięso:</span> @element.TempMeat</li>
+                            }
+                            @if (element.TempVegetable != null)
+                            {
+                                <li><span class="fw-bold">Warzywa:</span> @element.TempVegetable</li>
+                            }
+                            <li class="mt-2 d-inline-block price_@element.Id" id="@element.Id">Cena pizzy: @string.Format("{0:N2}zł", element.TempPrice)</li>
+                            <li class="d-inline-block">
+                                <button class="btn ms-4" type="submit" onclick="Function(@element.Id)"><i class="icon-trash-empty"></i></button>
+                            </li>
+                            <li class="border-bottom"></li>
+                        </ul>
+                    }
+                }
+            </div>
+        </div>
+        <div class="d-flex justify-content-center my-5">
+            @if (ViewBag.orderCount == 0 || ViewBag.order == null || ViewBag.tempWholeOrderPrice == null)
+            {
+                <div>
+                    <a class="btn btn-small btn-dark disabled" asp-controller="Summary" asp-action="SummaryIndex">Przejdź do podsumowania</a>
+                </div>
+            }
+            else
+            {
+                <div>
+                    <a class="btn btn-small btn-dark btn-summary" asp-controller="Summary" asp-action="SummaryIndex">Przejdź do podsumowania</a>
+                </div>
+            }
+        </div>
+    </div>
+</aside>
+
+<script>
+    const Function = function(id){
+        $.ajax({
+            method: "DELETE",
+            url: '@Url.Action("Delete", "Pizza")',
+            data: {id: id},
+            success: function(data){
+
+                const allUl = document.querySelectorAll(".order");
+                const sumOrderHandle = document.querySelectorAll(".sumOrder");
+                const quantity = document.querySelectorAll(".quantity");
+                const btnHandle = document.querySelectorAll(".btn-summary");
+
+                const emptyHandle = document.querySelector(".empty");
+                              
+                const basketPrice = document.querySelector(".price_" + id).innerHTML; 
+                const basketPriceSub = basketPrice.replace("Cena pizzy:", "");
+                const basketPriceSub2 = basketPriceSub.replace("zł", "");
+                const basketPriceSub3 = basketPriceSub2.replace(",", ".");
+
+                 sumOrderHandle.forEach(x => {
+                    const sumOrderSub = x.innerHTML.replace("Wartość zamówienia:", "");
+                    const sumOrderSub2 = sumOrderSub.replace("zł", "");
+                    const sumOrderSub3 = sumOrderSub2.replace(",", ".");
+                    x.innerHTML = `Wartość zamówienia: ${(parseFloat(sumOrderSub3) - parseFloat(basketPriceSub3)).toFixed(2)}zł`;
+                });
+
+                quantity.forEach(x => {
+                    x.innerHTML = x.innerHTML - 1;
+
+                    if(Number(x.innerHTML) === 0)
+                    {
+                        emptyHandle.innerHTML = `<p class="text-center">Koszyk jest pusty</p>`;
+                        x.innerHTML = "0";
+
+                        btnHandle.forEach(x => {
+                            x.classList.add("disabled");
+                        });
+                    }
+                });
+                
+                allUl.forEach(x => {
+                    
+                    if(id === Number(x.id)){
+                        x.remove();
+                    }                  
+                });              
+            },
+            error: function(err){
+                console.log(err);
+            }
+        })
+    }
+</script>

@@ -1,0 +1,103 @@
+﻿@{
+    ViewData["title"] = "Podsumowanie";
+}
+
+@model UserData
+
+<section>
+    <div class="row">
+        <header class="text-center mb-4 col-12">
+            <h1>Podsumowanie</h1>
+        </header>
+        <div class="col-12 col-xl-6 order-2 order-xl-0 bg-light p-5 border border-1" style="min-height: 777px;">
+            <form method="post">
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="border-bottom">
+                        <h3>Dane potrzebne do zamówienia</h3>
+                    </div>
+                    <div class="mb-3 mt-4 form-floating">
+                        <input asp-for="Name" class="form-control" />
+                        <label class="px-4" asp-for="Name"></label>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <input asp-for="Surname" class="form-control">
+                        <label class="px-4" asp-for="Surname"></label>
+                        <span asp-validation-for="Surname" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <input asp-for="City" class="form-control"/>
+                        <label class="px-4" asp-for="City"></label>
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 col-8 form-floating">
+                        <input asp-for="Street" class="form-control">
+                        <label class="px-4" asp-for="Street"></label>
+                        <span asp-validation-for="Street" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 col-4 form-floating">
+                        <input asp-for="HouseNumber" class="form-control">
+                        <label class="px-4" asp-for="HouseNumber"></label>
+                        <span asp-validation-for="HouseNumber" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 form-floating">
+                        <input asp-for="PhoneNumber"  class="form-control" />
+                        <small>Wymagany format np. 123-456-789</small>
+                        <label class="px-4" asp-for="PhoneNumber"></label>
+                        <span asp-validation-for="PhoneNumber" class="text-danger d-block"></span>
+                    </div>
+
+                    @if (ViewBag.orderCount == 0 || ViewBag.order == null)
+                    {
+                        <div class="text-center">
+                            <button class="btn btn-dark disabled" type="submit" >Zamów</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="text-center">
+                            <button class="btn btn-dark btn-summary" type="submit">Zamów</button>
+                        </div>
+                    }
+                </div>
+            </form>
+        </div>
+        <div class="col-12 mb-4 mb-xl-0 order-1 order-xl-0 col-xl-4 offset-xl-2 bg-light p-5 border border-1" style="max-height: 777px;">
+            <div class="border-bottom row">
+                <div class="border-bottom">
+                    <h3>Twoje zamówienie</h3>
+                </div>
+                <div class="col-3">
+                    <p class="my-2">Ilość: <span class="quantity">@ViewBag.orderCount</span></p>
+                </div>
+                <div class="col-9">
+                    <p class="my-2 sumOrder">Wartość zamówienia: @string.Format("{0:N2}zł", ViewBag.tempWholeOrderPrice)</p>
+                </div>
+            </div>
+            <div class="mt-4 row justify-content-center overflow-auto" style="max-height: 570px;">
+                @foreach (var element in ViewBag.order)
+                {
+                    <ul class="list-unstyled fs-basket order" id="@element.Id">
+                        <li><h5>Pizza: @element.TempPizzaName</h5></li>
+                        <li><span class="fw-bold">Rozmiar:</span> @element.TempSize</li>
+                        <li><span class="fw-bold">Ciasto:</span> @element.TempDough</li>
+                        <li><span class="fw-bold">Sos do pizzy:</span> @element.TempSauce</li>
+                        <li><span class="fw-bold">Ser:</span> @element.TempCheese</li>
+                        @if (element.TempMeat != null)
+                        {
+                            <li><span class="fw-bold">Mięso:</span> @element.TempMeat</li>
+                        }
+                        @if (element.TempVegetable != null)
+                        {
+                            <li><span class="fw-bold">Warzywa:</span> @element.TempVegetable</li>
+                        }
+                        <li class="mt-2 d-inline-block price_@element.Id">Cena pizzy: @string.Format("{0:N2}zł", element.TempPrice)<i></i></li>
+                        <li class="border-bottom"></li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+

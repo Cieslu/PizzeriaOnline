@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["title"] = "Szczegóły pizzy";
+}
+
+@model Pizza
+
+<section>
+    <div class="row">
+        <div class="mb-5 text-center row">
+            <div class="col-1">
+                <a class="btn btn-small btn-dark" asp-controller="Pizza" asp-action="PizzaIndex">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                        <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                    </svg>
+                </a>
+            </div>
+            <div class="col-10">
+                <h2>Pizza: @Model.Name</h2>
+            </div>
+        </div>
+        <div class="col-12 text-center">
+            <img class="border-radius img-fluid" src="~/pizza_images/@Model.Name/@Model.ImagePath">
+        </div>
+        <div class="col-12 gx-0 row mt-5 justify-content-center" style="min-height: 350px;">
+            <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionSize">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Rozmiar</button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionSize">
+                        <div class="accordion-body bg-light">
+                            <label class="btn btn-secondary mb-2 mt-2 col-12 pe-none" for="elo1">@ViewBag.SizeName</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5 col-md-4 col-xl-2 p-0" id="accordionDough">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">Ciasto</button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionDough">
+                        <div class="accordion-body bg-light">
+                            <label class="btn btn-secondary mb-2 mt-2 col-12 pe-none">@ViewBag.DoughName</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionSauce">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">Sos do pizzy</button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionSauce">
+                        <div class="accordion-body bg-light">
+                            <label class="btn btn-secondary mb-2 mt-2 col-12 pe-none">@ViewBag.SauceName</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionCheese">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseheadingFour" aria-expanded="false" aria-controls="collapseheadingFour">Ser</button>
+                    </h2>
+                    <div id="collapseheadingFour" class="accordion-collapse collapse show" aria-labelledby="headingheadingFour" data-bs-parent="#accordionCheese">
+                        <div class="accordion-body bg-light">
+                            <label class="btn btn-secondary mb-2 mt-2 col-12 pe-none">@ViewBag.CheeseName</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @if (Model.MeatIngredients.Count != 0)
+            {
+                <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionMeat">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">Mięso</button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse show" aria-labelledby="headingFive" data-bs-parent="#accordionMeat">
+                            <div class="accordion-body bg-light">
+                                @foreach (var meat in Model.MeatIngredients)
+                                {
+                                    <label class="btn btn-dark mb-2 mt-2 col-12 pe-none">@meat</label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (Model.VegetableIngredients.Count != 0)
+            {
+                <div class="accordion col-5 col-md-4 col-xl-2 p-0" id="accordionVegetable">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSix">
+                            <button class="accordion-button bg-light text-dark fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">Warzywa</button>
+                        </h2>
+                        <div id="collapseSix" class="accordion-collapse collapse show" aria-labelledby="headingSix" data-bs-parent="#accordionVegetable">
+                            <div class="accordion-body bg-light">
+                                @foreach (var vegetable in Model.VegetableIngredients)
+                                {
+                                    <label class="btn btn-dark mb-2 mt-2 col-12 pe-none">@vegetable</label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="col-12 mt-4 d-flex justify-content-center">
+        <div class="text-center shadow bg-light p-2">
+            <p class="fs-5 m-0 p-3">Wartość zamówienia: @string.Format("{0:N2}zł", Model.WholePrice)</p>
+        </div>
+    </div>
+    <form method="post">
+        <div class="col-12 row mt-5 g-0">
+            <div class="d-flex justify-content-center">
+                <a class="btn btn-small btn-dark mx-1" asp-controller="Pizza" asp-action="PizzaEdit" asp-route-id="@Model.Id">Edytuj składniki</a>
+                <button class="btn btn-small btn-dark" type="submit" asp-route-id="@Model.Id">Dodaj do koszyka</button>
+            </div>
+        </div>
+    </form>
+</section>
+

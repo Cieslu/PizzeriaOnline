@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Wykres II";
+}
+
+<div class="mb-5 text-center row">
+    <div class="col-1">
+        <a class="btn btn-small btn-dark" asp-controller="Administrator" asp-action="AdministratorChartIndex">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-double-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+            </svg>
+        </a>
+    </div>
+    <div class="col-10">
+        <h2>Wykres przedstawiający ilość sprzedanych pizz (@ViewBag.Quantity) w wybranym miesiącu (@ViewBag.Month)</h2>
+    </div>
+</div>
+
+<div class="chartDiv">
+    <canvas id="myChart" style="border: none;"></canvas>
+</div>
+
+<div class="form-check form-switch d-flex justify-content-center mt-5">
+    <input class="form-check-input" id="btnDoughnut" type="checkbox">
+    <label class="form-check-label ms-2" for="btnDoughnut">Przełącz na wykres doughnut</label>
+</div>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    const pizzaLabel = @Html.Raw(Json.Serialize(ViewBag.PizzaLabel));
+    const pizzaQuantity = @Html.Raw(Json.Serialize(ViewBag.PizzaQuantity));
+
+    const myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: pizzaLabel,
+            datasets: [{
+                label: 'Rodzaj pizzy',
+                data: pizzaQuantity,
+                backgroundColor: [
+                    'rgba(255,99,132,0.2)',
+                    'rgba(54, 162, 235,0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                    'rgba(255, 0, 255,0.2)',
+                    'rgba(0, 102, 102, 0.2)',
+                    'rgba(0, 51, 0, 0.2)',
+                    'rgba(128, 0, 0, 0.2)',
+                    'rgba(0, 0, 102, 0.2)',
+                    'rgba(102, 51, 0, 0.2)',
+                    'rgba(153, 153, 102, 0.2)',
+                    'rgba(153, 0, 51, 0.2)',
+                    'rgba(102, 102, 153, 0.2)',
+                    'rgba(0, 153, 51, 0.2)',
+                    'rgba(255, 204, 102, 0.2)'
+                ],
+                borderColor: 'rgb(0, 0, 0)',
+                borderWidth: 1,
+                hoverBackgroundColor: [
+                    'rgba(255,99,132,0.4)',
+                    'rgba(54, 162, 235,0.4)',
+                    'rgba(255, 206, 86, 0.4)',
+                    'rgba(75, 192, 192, 0.4)',
+                    'rgba(153, 102, 255, 0.4)',
+                    'rgba(255, 159, 64, 0.4)',
+                    'rgba(255, 0, 255,0.4)',
+                    'rgba(0, 102, 102, 0.4)',
+                    'rgba(0, 51, 0. 0.4)',
+                    'rgba(128, 0, 0, 0.4)',
+                    'rgba(0, 0, 102, 0.4)',
+                    'rgba(102, 51, 0, 0.4)',
+                    'rgba(153, 153, 102, 0.4)',
+                    'rgba(153, 0, 51, 0.4)',
+                    'rgba(102, 102, 153, 0.4)',
+                    'rgba(0, 153, 51, 0.4)',
+                    'rgba(255, 204, 102, 0.2)'
+                ],
+                hoverBorderColor: 'rgba(255,99,132,1)',
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+        },
+    });
+
+    const toggle = document.getElementById("btnDoughnut");
+
+    const Doughnut = function(){
+
+        if (myChart.options.cutout) {
+            myChart.options.cutout = 0;
+        }
+        else {
+            myChart.options.cutout = '50%';
+        }
+        myChart.update();
+    }
+
+    toggle.addEventListener('click', Doughnut)
+</script>
+
+
